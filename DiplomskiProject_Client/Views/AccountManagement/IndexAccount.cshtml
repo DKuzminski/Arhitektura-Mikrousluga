@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model DiplomskiProject_Client.Models.AccountManagementServiceClient
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexAccount</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Diplomski app", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Employees", "IndexEmployee", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Roles", "IndexRole", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Accounts", "IndexAccount", "AccountManagement")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-default" href="@Url.Action("CreateAccount", "AccountManagement")" role="button">Add account</a>
+    <br /><br />
+    <table class="table table-striped">
+        <tr>
+            <th>Account ID</th>
+            <th>Account Name</th>
+            <th>Options</th>
+        </tr>
+        @if (ViewBag.listAccounts != null)
+        {
+            foreach (var account in ViewBag.listAccounts)
+            {
+                <tr>
+                    <td>@account.Id</td>
+                    <td>@account.Ime</td>
+                    <td>
+                        <a class="btn btn-default" href="@Url.Action("ShowAccountData", "AccountManagement", new { id =
+                            account.Id})" role="button">Details</a>
+                        <a class="btn btn-default" href="@Url.Action("UpdateAccountData", "AccountManagement", new { id =
+                            account.Id})" role="button">Edit</a>
+                        <a class="btn btn-default" href="@Url.Action("GetRolForAcc", "AccountManagement", new { id =
+                            account.Id})" role="button">Show roles</a>
+                        
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+</body>
+</html>

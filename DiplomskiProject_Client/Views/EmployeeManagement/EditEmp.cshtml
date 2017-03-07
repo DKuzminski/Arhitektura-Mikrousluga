@@ -1,0 +1,76 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model DiplomskiProject_Client.ViewModels.EmployeeManagementViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>EditEmp</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Diplomski app", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Employees", "IndexEmployee", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Roles", "IndexRole", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Accounts", "IndexAccount", "AccountManagement")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("EditEmp", "EmployeeManagement"))
+    {
+        <table class="table table-striped">
+            <tr>
+                <td>@Html.LabelFor(model => model.Employee.Id)</td>
+                <td>
+                    @Html.ValueFor(model => model.Employee.Id)
+                    @Html.HiddenFor(model => model.Employee.Id)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.Employee.Ime)</td>
+                <td>@Html.TextBoxFor(model => model.Employee.Ime)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Employee.Prezime)</td>
+                <td>@Html.TextBoxFor(model => model.Employee.Prezime)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Employee.Adresa)</td>
+                <td>@Html.TextBoxFor(model => model.Employee.Adresa)</td>
+            </tr>
+
+            <tr>
+                <td>@Html.LabelFor(model => model.Employee.Grad)</td>
+                <td>@Html.TextBoxFor(model => model.Employee.Grad)</td>
+            </tr>
+
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Save" /> | <a class="btn btn-default" href="@Url.Action("IndexEmployee", "EmployeeManagement")" role="button">Cancel</a></td>
+            </tr>
+
+        </table>
+    }
+
+</body>
+</html>

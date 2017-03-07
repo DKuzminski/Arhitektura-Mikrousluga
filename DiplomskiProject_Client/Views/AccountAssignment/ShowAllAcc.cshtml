@@ -1,0 +1,62 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model DiplomskiProject_Client.ViewModels.AccountAssignmentViewModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowAllAcc</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Diplomski app", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Employees", "IndexEmployee", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Roles", "IndexRole", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Accounts", "IndexAccount", "AccountManagement")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Account ID</th>
+            <th>Account Name</th>
+            <th>Account type</th>
+        </tr>
+        @if (ViewBag.listAllAccForEmp != null)
+        {
+            foreach (var accforemp in ViewBag.listAllAccForEmp)
+            {
+                <tr>
+                    <td>@accforemp.AccID</td>
+                    <td>@accforemp.ImeAcc</td>
+                    <td>@accforemp.TipAcc</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td><a class="btn btn-default" href="@Url.Action("IndexEmployee", "EmployeeManagement")" role="button">Back</a></td>
+        </tr>
+    </table>
+
+</body>
+</html>

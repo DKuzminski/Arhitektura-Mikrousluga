@@ -1,0 +1,263 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bazaAccountManModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AccountTable">
+          <Key>
+            <PropertyRef Name="AccID" />
+          </Key>
+          <Property Name="AccID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImeAcc" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="TipAcc" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Kreirano" Type="datetime" />
+          <Property Name="Izmjena" Type="datetime" />
+        </EntityType>
+        <EntityType Name="AccRoleMappTable">
+          <Key>
+            <PropertyRef Name="AccID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="AccID" Type="int" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+          <Property Name="Opis" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EmpAccMappTable">
+          <Key>
+            <PropertyRef Name="ZaposlenikID" />
+            <PropertyRef Name="AccID" />
+          </Key>
+          <Property Name="ZaposlenikID" Type="int" Nullable="false" />
+          <Property Name="AccID" Type="int" Nullable="false" />
+          <Property Name="Opis" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="RoleTable">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImeRole" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_AccRoleMapping_AccountTable">
+          <End Role="AccountTable" Type="Self.AccountTable" Multiplicity="1" />
+          <End Role="AccRoleMappTable" Type="Self.AccRoleMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTable">
+              <PropertyRef Name="AccID" />
+            </Principal>
+            <Dependent Role="AccRoleMappTable">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccRoleMapping_RoleTable">
+          <End Role="RoleTable" Type="Self.RoleTable" Multiplicity="1" />
+          <End Role="AccRoleMappTable" Type="Self.AccRoleMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleTable">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="AccRoleMappTable">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpAccMapping_AccountTable">
+          <End Role="AccountTable" Type="Self.AccountTable" Multiplicity="1" />
+          <End Role="EmpAccMappTable" Type="Self.EmpAccMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTable">
+              <PropertyRef Name="AccID" />
+            </Principal>
+            <Dependent Role="EmpAccMappTable">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bazaAccountManModelStoreContainer">
+          <EntitySet Name="AccountTable" EntityType="Self.AccountTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AccRoleMappTable" EntityType="Self.AccRoleMappTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmpAccMappTable" EntityType="Self.EmpAccMappTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleTable" EntityType="Self.RoleTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_AccRoleMapping_AccountTable" Association="Self.FK_AccRoleMapping_AccountTable">
+            <End Role="AccountTable" EntitySet="AccountTable" />
+            <End Role="AccRoleMappTable" EntitySet="AccRoleMappTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccRoleMapping_RoleTable" Association="Self.FK_AccRoleMapping_RoleTable">
+            <End Role="RoleTable" EntitySet="RoleTable" />
+            <End Role="AccRoleMappTable" EntitySet="AccRoleMappTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpAccMapping_AccountTable" Association="Self.FK_EmpAccMapping_AccountTable">
+            <End Role="AccountTable" EntitySet="AccountTable" />
+            <End Role="EmpAccMappTable" EntitySet="EmpAccMappTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bazaAccountManModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AccountTable">
+          <Key>
+            <PropertyRef Name="AccID" />
+          </Key>
+          <Property Name="AccID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImeAcc" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TipAcc" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Kreirano" Type="DateTime" Precision="3" />
+          <Property Name="Izmjena" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="AccRoleMappTables" Relationship="Self.FK_AccRoleMapping_AccountTable" FromRole="AccountTable" ToRole="AccRoleMappTable" />
+          <NavigationProperty Name="EmpAccMappTables" Relationship="Self.FK_EmpAccMapping_AccountTable" FromRole="AccountTable" ToRole="EmpAccMappTable" />
+        </EntityType>
+        <EntityType Name="AccRoleMappTable">
+          <Key>
+            <PropertyRef Name="AccID" />
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="AccID" Type="Int32" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AccountTable" Relationship="Self.FK_AccRoleMapping_AccountTable" FromRole="AccRoleMappTable" ToRole="AccountTable" />
+          <NavigationProperty Name="RoleTable" Relationship="Self.FK_AccRoleMapping_RoleTable" FromRole="AccRoleMappTable" ToRole="RoleTable" />
+        </EntityType>
+        <EntityType Name="EmpAccMappTable">
+          <Key>
+            <PropertyRef Name="ZaposlenikID" />
+            <PropertyRef Name="AccID" />
+          </Key>
+          <Property Name="ZaposlenikID" Type="Int32" Nullable="false" />
+          <Property Name="AccID" Type="Int32" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="AccountTable" Relationship="Self.FK_EmpAccMapping_AccountTable" FromRole="EmpAccMappTable" ToRole="AccountTable" />
+        </EntityType>
+        <EntityType Name="RoleTable">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImeRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="AccRoleMappTables" Relationship="Self.FK_AccRoleMapping_RoleTable" FromRole="RoleTable" ToRole="AccRoleMappTable" />
+        </EntityType>
+        <Association Name="FK_AccRoleMapping_AccountTable">
+          <End Role="AccountTable" Type="Self.AccountTable" Multiplicity="1" />
+          <End Role="AccRoleMappTable" Type="Self.AccRoleMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTable">
+              <PropertyRef Name="AccID" />
+            </Principal>
+            <Dependent Role="AccRoleMappTable">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmpAccMapping_AccountTable">
+          <End Role="AccountTable" Type="Self.AccountTable" Multiplicity="1" />
+          <End Role="EmpAccMappTable" Type="Self.EmpAccMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountTable">
+              <PropertyRef Name="AccID" />
+            </Principal>
+            <Dependent Role="EmpAccMappTable">
+              <PropertyRef Name="AccID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AccRoleMapping_RoleTable">
+          <End Role="RoleTable" Type="Self.RoleTable" Multiplicity="1" />
+          <End Role="AccRoleMappTable" Type="Self.AccRoleMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleTable">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="AccRoleMappTable">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BazaAccountManEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AccountTables" EntityType="Self.AccountTable" />
+          <EntitySet Name="AccRoleMappTables" EntityType="Self.AccRoleMappTable" />
+          <EntitySet Name="EmpAccMappTables" EntityType="Self.EmpAccMappTable" />
+          <EntitySet Name="RoleTables" EntityType="Self.RoleTable" />
+          <AssociationSet Name="FK_AccRoleMapping_AccountTable" Association="Self.FK_AccRoleMapping_AccountTable">
+            <End Role="AccountTable" EntitySet="AccountTables" />
+            <End Role="AccRoleMappTable" EntitySet="AccRoleMappTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmpAccMapping_AccountTable" Association="Self.FK_EmpAccMapping_AccountTable">
+            <End Role="AccountTable" EntitySet="AccountTables" />
+            <End Role="EmpAccMappTable" EntitySet="EmpAccMappTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AccRoleMapping_RoleTable" Association="Self.FK_AccRoleMapping_RoleTable">
+            <End Role="RoleTable" EntitySet="RoleTables" />
+            <End Role="AccRoleMappTable" EntitySet="AccRoleMappTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bazaAccountManModelStoreContainer" CdmEntityContainer="BazaAccountManEntities">
+          <EntitySetMapping Name="AccountTables">
+            <EntityTypeMapping TypeName="bazaAccountManModel.AccountTable">
+              <MappingFragment StoreEntitySet="AccountTable">
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="ImeAcc" ColumnName="ImeAcc" />
+                <ScalarProperty Name="TipAcc" ColumnName="TipAcc" />
+                <ScalarProperty Name="Kreirano" ColumnName="Kreirano" />
+                <ScalarProperty Name="Izmjena" ColumnName="Izmjena" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AccRoleMappTables">
+            <EntityTypeMapping TypeName="bazaAccountManModel.AccRoleMappTable">
+              <MappingFragment StoreEntitySet="AccRoleMappTable">
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmpAccMappTables">
+            <EntityTypeMapping TypeName="bazaAccountManModel.EmpAccMappTable">
+              <MappingFragment StoreEntitySet="EmpAccMappTable">
+                <ScalarProperty Name="ZaposlenikID" ColumnName="ZaposlenikID" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleTables">
+            <EntityTypeMapping TypeName="bazaAccountManModel.RoleTable">
+              <MappingFragment StoreEntitySet="RoleTable">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ImeRole" ColumnName="ImeRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

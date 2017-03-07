@@ -1,0 +1,70 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>IndexRole</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Diplomski app", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Employees", "IndexEmployee", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Roles", "IndexRole", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Accounts", "IndexAccount", "AccountManagement")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <a class="btn btn-default" href="@Url.Action("CreateRole", "EmployeeManagement")" role="button">Add role</a>
+    <br /><br />
+    <table class="table table-striped">
+        <tr>
+            <th>Role ID</th>
+            <th>Role Name</th>
+            <th>Options</th>
+        </tr>
+        @if (ViewBag.listRoles != null)
+        {
+            foreach (var role in ViewBag.listRoles)
+            {
+                <tr>
+                    <td>@role.Id</td>
+                    <td>@role.Ime</td>
+                    <td>
+                    <a class="btn btn-default" href="@Url.Action("ShowRolData", "EmployeeManagement", new { id =
+                            role.Id})" role="button">Details</a>
+                     <a class="btn btn-default" href="@Url.Action("EditRole", "EmployeeManagement", new { id =
+                            role.Id})" role="button">Edit</a>
+                     <a class="btn btn-default" href="@Url.Action("GetEmpForRole", "EmployeeManagement", new { id =
+                            role.Id})" role="button">Show Employees</a>
+                     <a class="btn btn-default" href="@Url.Action("GetAccForRol", "AccountManagement", new { id =
+                            role.Id})" role="button">Show Accounts</a>
+                     <a class="btn btn-default" href="@Url.Action("DeleteRole", "EmployeeManagement", new { id =
+                            role.Id})" role="button">Delete</a>
+                     
+                      
+                    </td>
+                </tr>
+            }
+        }
+    </table>
+
+</body>
+</html>

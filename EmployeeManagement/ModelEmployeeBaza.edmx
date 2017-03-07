@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="bazaEmployeeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="EmpAccMappTable">
+          <Key>
+            <PropertyRef Name="ZaposlenikID" />
+            <PropertyRef Name="AccID" />
+          </Key>
+          <Property Name="ZaposlenikID" Type="int" Nullable="false" />
+          <Property Name="AccID" Type="int" Nullable="false" />
+          <Property Name="Opis" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="EmployeeTable">
+          <Key>
+            <PropertyRef Name="ZaposlenikID" />
+          </Key>
+          <Property Name="ZaposlenikID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImeZap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PrezimeZap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="DatumRodenja" Type="date" Nullable="false" />
+          <Property Name="AdresaZap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="GradZap" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RoleTable">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ImeRole" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_EmpAccMapping_EmployeeTable">
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="1" />
+          <End Role="EmpAccMappTable" Type="Self.EmpAccMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTable">
+              <PropertyRef Name="ZaposlenikID" />
+            </Principal>
+            <Dependent Role="EmpAccMappTable">
+              <PropertyRef Name="ZaposlenikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeTable_RoleTable">
+          <End Role="RoleTable" Type="Self.RoleTable" Multiplicity="1" />
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleTable">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="EmployeeTable">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="bazaEmployeeModelStoreContainer">
+          <EntitySet Name="EmpAccMappTable" EntityType="Self.EmpAccMappTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeTable" EntityType="Self.EmployeeTable" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RoleTable" EntityType="Self.RoleTable" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_EmpAccMapping_EmployeeTable" Association="Self.FK_EmpAccMapping_EmployeeTable">
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+            <End Role="EmpAccMappTable" EntitySet="EmpAccMappTable" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeTable_RoleTable" Association="Self.FK_EmployeeTable_RoleTable">
+            <End Role="RoleTable" EntitySet="RoleTable" />
+            <End Role="EmployeeTable" EntitySet="EmployeeTable" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bazaEmployeeModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="EmpAccMappTable">
+          <Key>
+            <PropertyRef Name="ZaposlenikID" />
+            <PropertyRef Name="AccID" />
+          </Key>
+          <Property Name="ZaposlenikID" Type="Int32" Nullable="false" />
+          <Property Name="AccID" Type="Int32" Nullable="false" />
+          <Property Name="Opis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EmployeeTable" Relationship="Self.FK_EmpAccMapping_EmployeeTable" FromRole="EmpAccMappTable" ToRole="EmployeeTable" />
+        </EntityType>
+        <EntityType Name="EmployeeTable">
+          <Key>
+            <PropertyRef Name="ZaposlenikID" />
+          </Key>
+          <Property Name="ZaposlenikID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImeZap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PrezimeZap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="DatumRodenja" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="AdresaZap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="GradZap" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmpAccMappTables" Relationship="Self.FK_EmpAccMapping_EmployeeTable" FromRole="EmployeeTable" ToRole="EmpAccMappTable" />
+          <NavigationProperty Name="RoleTable" Relationship="Self.FK_EmployeeTable_RoleTable" FromRole="EmployeeTable" ToRole="RoleTable" />
+        </EntityType>
+        <EntityType Name="RoleTable">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImeRole" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="EmployeeTables" Relationship="Self.FK_EmployeeTable_RoleTable" FromRole="RoleTable" ToRole="EmployeeTable" />
+        </EntityType>
+        <Association Name="FK_EmpAccMapping_EmployeeTable">
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="1" />
+          <End Role="EmpAccMappTable" Type="Self.EmpAccMappTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeTable">
+              <PropertyRef Name="ZaposlenikID" />
+            </Principal>
+            <Dependent Role="EmpAccMappTable">
+              <PropertyRef Name="ZaposlenikID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeTable_RoleTable">
+          <End Role="RoleTable" Type="Self.RoleTable" Multiplicity="1" />
+          <End Role="EmployeeTable" Type="Self.EmployeeTable" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RoleTable">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="EmployeeTable">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BazaEmployeeEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EmpAccMappTables" EntityType="Self.EmpAccMappTable" />
+          <EntitySet Name="EmployeeTables" EntityType="Self.EmployeeTable" />
+          <EntitySet Name="RoleTables" EntityType="Self.RoleTable" />
+          <AssociationSet Name="FK_EmpAccMapping_EmployeeTable" Association="Self.FK_EmpAccMapping_EmployeeTable">
+            <End Role="EmployeeTable" EntitySet="EmployeeTables" />
+            <End Role="EmpAccMappTable" EntitySet="EmpAccMappTables" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeTable_RoleTable" Association="Self.FK_EmployeeTable_RoleTable">
+            <End Role="RoleTable" EntitySet="RoleTables" />
+            <End Role="EmployeeTable" EntitySet="EmployeeTables" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="bazaEmployeeModelStoreContainer" CdmEntityContainer="BazaEmployeeEntities">
+          <EntitySetMapping Name="EmpAccMappTables">
+            <EntityTypeMapping TypeName="bazaEmployeeModel.EmpAccMappTable">
+              <MappingFragment StoreEntitySet="EmpAccMappTable">
+                <ScalarProperty Name="ZaposlenikID" ColumnName="ZaposlenikID" />
+                <ScalarProperty Name="AccID" ColumnName="AccID" />
+                <ScalarProperty Name="Opis" ColumnName="Opis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EmployeeTables">
+            <EntityTypeMapping TypeName="bazaEmployeeModel.EmployeeTable">
+              <MappingFragment StoreEntitySet="EmployeeTable">
+                <ScalarProperty Name="ZaposlenikID" ColumnName="ZaposlenikID" />
+                <ScalarProperty Name="ImeZap" ColumnName="ImeZap" />
+                <ScalarProperty Name="PrezimeZap" ColumnName="PrezimeZap" />
+                <ScalarProperty Name="DatumRodenja" ColumnName="DatumRodenja" />
+                <ScalarProperty Name="AdresaZap" ColumnName="AdresaZap" />
+                <ScalarProperty Name="GradZap" ColumnName="GradZap" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RoleTables">
+            <EntityTypeMapping TypeName="bazaEmployeeModel.RoleTable">
+              <MappingFragment StoreEntitySet="RoleTable">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="ImeRole" ColumnName="ImeRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,67 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model DiplomskiProject_Client.ViewModels.AccountManagementViewModel
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>UpdateAccountData</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Diplomski app", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Employees", "IndexEmployee", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Roles", "IndexRole", "EmployeeManagement")</li>
+                    <li>@Html.ActionLink("Accounts", "IndexAccount", "AccountManagement")</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    @using (Html.BeginForm("UpdateAccountData", "AccountManagement"))
+    {
+        <table class="table table-striped">
+            <tr>
+                <td>@Html.LabelFor(model => model.Account.Id)</td>
+                <td>
+                    @Html.ValueFor(model => model.Account.Id)
+                    @Html.HiddenFor(model => model.Account.Id)
+                </td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.Account.Ime)</td>
+                <td>@Html.TextBoxFor(model => model.Account.Ime)</td>
+            </tr>
+            <tr>
+                <td>@Html.LabelFor(model => model.Account.Tip)</td>
+                <td>@Html.TextBoxFor(model => model.Account.Tip)</td>
+            </tr>
+
+
+            <tr>
+                <td>&nbsp;</td>
+                <td><input type="submit" value="Save" /> | <a class="btn btn-default" href="@Url.Action("IndexAccount", "AccountManagement")" role="button">Cancel</a></td>
+            </tr>
+            
+        </table>
+    }
+
+</body>
+</html>
