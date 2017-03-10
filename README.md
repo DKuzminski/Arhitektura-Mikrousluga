@@ -1,5 +1,4 @@
 # Arhitektura-Mikrousluga
-Diplomski rad
 
 Diplomski rad podijeljen je na praktični i teorijski dio. Praktični dio predstavlja izradu web aplikacije koristeći arhitekturu mikrousluga. Aplikacija se satoji od nekoliko autonomnih usluga
 koje rade zajedno kao jedan veći sustav. Uz pomoć okvira WCF realizirane su sve usluge, dok je klijentska aplikacija ostvarena unutar MVC uzorka.
