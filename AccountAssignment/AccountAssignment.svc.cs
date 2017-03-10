@@ -49,87 +49,9 @@ namespace AccountAssignment
         }
 
 
-        /*
-        // ROLECHANGE
-        public bool roleChange(string id)
-        {
-            
-            AccountManagement.AccountManagement accMan = new AccountManagement.AccountManagement();
-            EmployeeManagement.EmployeeManagement empMan = new EmployeeManagement.EmployeeManagement();
-
-            var findEmp = empMan.findEmp(id);
-            return empMan.editOnlyEmpRol(findEmp);
-
-            
-            var findRole = empMan.findRol(id);
-            string IDrole = findRole.ToString();
-
-            var getAccForRole = accMan.findAllAccByRol(IDrole);
-            addAccToEmployee();
-            
-        }
-
-        
-        // ROLECHANGE
-        public bool roleChange(string idZap, string idRole)
-        {
-            AccountManagement.AccountManagement accMan = new AccountManagement.AccountManagement();
-            EmployeeManagement.EmployeeManagement empMan = new EmployeeManagement.EmployeeManagement();
-
-            var findID = empMan.findEmp(idZap);
-            empMan.editOnlyEmpRol(findID);
-
-
-            var findRole = empMan.findRol(idRole);
-            string IDrole = findRole.ToString();
-
-            var getAccForRole = accMan.findAllAccByRol(IDrole);
-            addAccToEmployee(findID);
-
-            return true;
-
-        }*/
-
-
-        /*
-        // DODAJ RAČUN ZAPOSLENIKU
-        public bool addAccToEmployee(EmpAccMapp empaccmapp)
-        {
-            using (BazaAccAssignEntities ben = new BazaAccAssignEntities())
-            {
-                try
-                {
-                    EmpAccMappTable eamt = new EmpAccMappTable();
-                    eamt.ZaposlenikID = empaccmapp.ZapId;
-                    eamt.AccID = empaccmapp.AccId;
-                    ben.EmpAccMappTables.Add(eamt);
-                    ben.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }*/
-
-
         // ADD ACCOUNT TO EMPLOYEE
         public bool addAccToEmployee(EmpAccMapp empaccmapp)
         {
-            //Console.SetOut(new System.IO.StreamWriter("e:\\assign.log"));
-            //System.Diagnostics.Debug.WriteLine(employeeID + "TEST" + newRoleID);
-            //System.Diagnostics.Debug.WriteLine(employeeID.ToString() + "proslijeđeno od rolechange metode" + newRoleID.ToString());
-            //string BASE_URL = "http://localhost:25006/AccountManagement.svc/";
-
-
-            //StreamWriter fsf = new StreamWriter("C:\\Users\\Dodo\\Downloads\\Diplomski\\assignAccount.log");
-            //fsf.WriteLine("primljeni parametri:");
-            //fsf.WriteLine("employee ID: " + empaccmapp.ZapId);
-            //fsf.WriteLine("role ID: " + empaccmapp.RoleId);
-            //fsf.Flush();
-            //fsf.Close();
-            
             
             string findAccURI = "findallaccbyrol/{0}";
             string zajednoURI = BASE_URL_ACCMAN + findAccURI;
@@ -141,12 +63,6 @@ namespace AccountAssignment
             var js = new JavaScriptSerializer();
             List<ManyToManyFindAccRole> listaIspis = js.Deserialize<List<ManyToManyFindAccRole>>(json);
 
-            //int broj = 99;
-            //fsf.WriteLine("test: " + broj);
-            //fsf.WriteLine("listaispis: " + listaIspis);
-            //fsf.Flush();
-
-            
             using (BazaAccAssignEntities ben = new BazaAccAssignEntities())
             {
                 try
@@ -154,65 +70,35 @@ namespace AccountAssignment
                     List<EmpAccMappTable> eamList = new List<EmpAccMappTable>();
                     foreach (var obj in listaIspis)
                     {
-                        //int objekt = Convert.ToInt32(obj);
                         EmpAccMappTable eam = new EmpAccMappTable();
                         eam.ZaposlenikID = empaccmapp.ZapId;
                         eam.AccID = obj.AccID;
-                        eamList.Add(eam);
-                      
-                        //ben.EmpAccMappTables.Add(eam);                       
+                        eamList.Add(eam);            
                     }
-                    //fsf.WriteLine("eamList: ", eamList);
-                    //fsf.Flush();
                     ben.EmpAccMappTables.AddRange(eamList);
                     ben.SaveChanges();
-                   
-                   // fsf.Close();
+
                     return true;
                 }
                 catch
                 {
-                    //fsf.Close();
                     return false;
                 }
-
-
             }
-
-            
-            //return true;
-
         }
 
 
         // UKLONI RAČUN OD ZAPOSLENIKA
         public bool removeAccFromEmployee(EmpAccMapp empaccmapp)
         {
-            StreamWriter fsf = new StreamWriter("C:\\Users\\Dodo\\Downloads\\Diplomski\\removeAccFromEmployee.log");
-            fsf.WriteLine("primljeni parametri:");
-            fsf.WriteLine("employee ID: " + empaccmapp.ZapId);
-            fsf.WriteLine("role ID: " + empaccmapp.RoleId);
-            fsf.Flush();
-
-            //string BASE_URL = "http://localhost:25006/AccountManagement.svc/";
             string findAccURI = "findallaccbyrol/{0}";
             string zajednoURI = BASE_URL_ACCMAN + findAccURI;
-
-           
 
             var webclient = new WebClient();
             string url = string.Format(zajednoURI, empaccmapp.RoleId);
             var json = webclient.DownloadString(url);
             var js = new JavaScriptSerializer();
             List<ManyToManyFindAccRole> listaIspis = js.Deserialize<List<ManyToManyFindAccRole>>(json);
-
-            /*
-            foreach(var obje in listaIspis)
-            {
-                fsf.WriteLine("iz liste " + obje.AccID);
-                fsf.Flush();
-            }*/
-            
 
             using (BazaAccAssignEntities ben = new BazaAccAssignEntities())
             {
@@ -222,38 +108,20 @@ namespace AccountAssignment
                     int cid = Convert.ToInt32(empaccmapp.ZapId);
                     foreach (var obj in listaIspis)
                     {
-                        //int objekt = Convert.ToInt32(obj);
-                        //fsf.WriteLine("iz liste: " + obj.AccID);
-                        //fsf.Flush();
-                        
-                        //EmpAccMappTable eamt = ben.EmpAccMappTables.Single(ea => ea.ZaposlenikID == objekt && ea.AccID == objekt);
-                        
                         EmpAccMappTable eamt = new EmpAccMappTable();
 
                         ben.EmpAccMappTables.RemoveRange(ben.EmpAccMappTables.Where(eam => eam.ZaposlenikID == cid));
                         ben.SaveChanges();
-                       // eamt.ZaposlenikID = empaccmapp.ZapId;
-                        //eamt.AccID = obj.AccID;
-                        //eamList.Add(eamt);
-                        
                     }
 
-                    //ben.EmpAccMappTables.RemoveRange(eamList);
                     ben.SaveChanges();
-
-
-                    fsf.Close();
                     return true;
                 }
                 catch
                 {
-                    fsf.Close();
                     return false;
                 }
             }
         }
-
-
-
     }
 }

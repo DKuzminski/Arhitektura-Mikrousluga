@@ -32,9 +32,6 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
         // DODAJ RAČUN ZAPOSLENIKU
         public bool addAccToEmployee(EmpAccMapp empaccmapp)
         {
@@ -58,10 +55,6 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
-
         // UKLONI RAČUN ZAPOSLENIKA
         public bool removeAccFromEmployee(EmpAccMapp empaccmapp)
         {
@@ -83,18 +76,5 @@ namespace DiplomskiProject_Client.Models
                 return false;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

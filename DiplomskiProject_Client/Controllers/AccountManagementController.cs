@@ -11,17 +11,13 @@ namespace DiplomskiProject_Client.Controllers
 {
     public class AccountManagementController : Controller
     {
-        // IPSIŠI SVE RAČUNE U TABLICI
+        // ISPIŠI SVE RAČUNE U TABLICI
         public ActionResult IndexAccount()
         {
             AccountManagementServiceClient amsc = new AccountManagementServiceClient();
             ViewBag.listAccounts = amsc.findAllAcc();
             return View();
         }
-
-
-
-
 
         // KREIRANJE NOVOG RAČUNA
         [HttpGet]
@@ -39,8 +35,6 @@ namespace DiplomskiProject_Client.Controllers
         }
 
 
-
-
         // BRISANJE RAČUNA
         public ActionResult DeleteAccount(string id)
         {
@@ -48,11 +42,6 @@ namespace DiplomskiProject_Client.Controllers
             amsc.deleteAcc(amsc.findAcc(id));
             return RedirectToAction("IndexAccount");
         }
-
-
-
-
-
 
 
         // EDIT RAČUNA
@@ -74,7 +63,6 @@ namespace DiplomskiProject_Client.Controllers
         }
 
 
-
         //PRIKAZ JEDNOG ZAPOSLENIKA
         [HttpGet]
         public ActionResult ShowAccountData(string id)
@@ -86,9 +74,6 @@ namespace DiplomskiProject_Client.Controllers
         }
 
 
-
-
-        // OVO JE DIO CHECKBOX-A U MVC-U
         // PRIKAZ SVIH RAČUNA VEZANIH ZA POJEDINU ROLU
         [HttpGet]
         public ActionResult GetAccForRol(string id)
@@ -112,53 +97,9 @@ namespace DiplomskiProject_Client.Controllers
             }
             
             fsf.Close();
-            /*
-            //System.Diagnostics.Debug.WriteLine(ids); 
-            AccountManagementServiceClient amsc = new AccountManagementServiceClient();
-            AccountManagementViewModel amvm = new AccountManagementViewModel();
-
-            foreach(var item in Podaci)
-            {
-                if(collection != null)
-                {
-                string objekt = item.ToString();
-                var accounti = amsc.findAccRoleMapp(objekt);
-                amsc.removeAccFromRole(accounti);
-                }
-            }*/
+            
             return RedirectToAction("GetAccForRol");
         }
-
-       
-
-
-        /*
-        [HttpPost]
-        public ActionResult GetAccForRol(FormCollection formCollection)
-        {
-            //System.Diagnostics.Debug.WriteLine(ids); // ovo dodaj za ispis sadržaja u createEmp i roleChange
-            AccountManagementServiceClient amsc = new AccountManagementServiceClient();
-            AccountManagementViewModel amvm = new AccountManagementViewModel();
-
-            if (formCollection != null)
-            {
-                string[] ids = formCollection["accId"].Split(new char[] {','});
-
-                if (ids != null || ids.Length != 0)
-                {
-                    foreach (string id in ids)
-                    {
-                        var accounti = amsc.findAccRoleMapp(id);
-                        amsc.removeAccFromRole(accounti);
-
-                    }
-                }
-            }
-
-            return RedirectToAction("GetAccForRol");
-        }*/
-        
-
 
 
 
@@ -170,8 +111,6 @@ namespace DiplomskiProject_Client.Controllers
             ViewBag.listRolForAcc = amsc.findAllRolByAcc(id);
             return View();
         }
-
-
 
 
         // ADD ROLE TO ACCOUNT
@@ -198,46 +137,6 @@ namespace DiplomskiProject_Client.Controllers
             amsc.removeRoleFromAcc(amsc.findAccRoleMapp(id));
             return RedirectToAction("IndexAccount");
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        /*
-        // PRIKAZ SVIH RAČUNA VEZANIH ZA POJEDINU ROLU (EDIT ACCOUNTS FOR ROLE CHECKBOX)
-        [HttpGet]
-        public ActionResult FindAccountForRole(string id)
-        {
-            AccountManagementServiceClient amsc = new AccountManagementServiceClient();
-            ViewBag.listEditAccForRole = amsc.findAccsForRole(id);
-            return View();
-        }*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         // ADD ACCOUNT TO ROLE

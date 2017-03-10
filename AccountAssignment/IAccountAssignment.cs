@@ -15,7 +15,7 @@ namespace AccountAssignment
     public interface IAccountAssignment
     {
 
-        // Pronađi sve zaposlenik id i račune vezane uz njih (AKO BUDE POTREBNO) 
+        // Pronađi sve zaposlenik id i račune vezane uz njih (ako) 
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findempacc", ResponseFormat = WebMessageFormat.Json)]
         List<EmpAccMapp> findEmpAcc();
@@ -24,8 +24,6 @@ namespace AccountAssignment
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findallaccforemp/{id}", ResponseFormat = WebMessageFormat.Json)]
         List<ManyToManyEmpAcc> findAllAccForEmp(string id);
-
-
 
         // Dodaj account zaposleniku
         [OperationContract]
@@ -38,22 +36,5 @@ namespace AccountAssignment
         [WebInvoke(Method = "DELETE", UriTemplate = "removeaccfromemployee", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         bool removeAccFromEmployee(EmpAccMapp empaccmapp);
 
-        /*
-        [OperationContract]
-        [WebInvoke(Method = "PUT", UriTemplate = "editrol", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-        bool editRol(EmpAccMapp empaccmapp);*/
-
-        /*
-      // ROLECHANGE
-      [OperationContract]
-      [WebInvoke(Method = "PUT", UriTemplate = "rolechange", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
-      bool roleChange(string id);
-      */
-
-        /*
-         // Pronađi pojedinog zaposlenika
-         [OperationContract]
-         [WebInvoke(Method = "GET", UriTemplate = "findemprolchange/{id}", ResponseFormat = WebMessageFormat.Json)]
-         Employee findEmpRolChange(string id);*/
     }
 }

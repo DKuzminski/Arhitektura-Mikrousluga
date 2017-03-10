@@ -19,8 +19,6 @@ namespace DiplomskiProject_Client.Controllers
         }
 
 
-
-
         // KREIRANJE NOVOG ZAPOSLENIKA
         [HttpGet]
         public ActionResult CreateEmp()
@@ -31,18 +29,10 @@ namespace DiplomskiProject_Client.Controllers
         [HttpPost]
         public ActionResult CreateEmp(EmployeeManagementViewModel emvm)
         {
-            //try
-            //{
-                EmployeeManagementServiceClient emsc = new EmployeeManagementServiceClient();
-                emsc.createEmp(emvm.Employee);
-                return RedirectToAction("IndexEmployee");
-           /* }
-            catch(Exception e)
-            {
-                return View("Error");
-            }*/
+            EmployeeManagementServiceClient emsc = new EmployeeManagementServiceClient();
+            emsc.createEmp(emvm.Employee);
+            return RedirectToAction("IndexEmployee");
         }
-
 
 
         // BRISANJE ZAPOSLENIKA
@@ -52,9 +42,6 @@ namespace DiplomskiProject_Client.Controllers
             emsc.deleteEmp(emsc.findEmp(id));
             return RedirectToAction("IndexEmployee");
         }
-
-
-
 
         // UREDI PODATKE ZAPOSLENIKA
         [HttpGet]
@@ -73,9 +60,6 @@ namespace DiplomskiProject_Client.Controllers
             emsc.editEmp(emvm.Employee);
             return RedirectToAction("IndexEmployee");
         }
-
-
-
 
 
         // UREDI SAMO ROLU ZAPOSLENIKA
@@ -98,8 +82,6 @@ namespace DiplomskiProject_Client.Controllers
 
 
 
-
-
         // PRIKAŽI PODATKE SAMO JEDNOG ZAPOSLENIKA
         [HttpGet]
         public ActionResult ShowEmpData(string id)
@@ -112,8 +94,6 @@ namespace DiplomskiProject_Client.Controllers
 
 
 
-
-
         // PRIKAZ SVIH ZAPOSLENIKA KOJI SU VEZANI UZ JEDNU ROLU
         [HttpGet]
         public ActionResult GetEmpForRole(string id)
@@ -122,16 +102,6 @@ namespace DiplomskiProject_Client.Controllers
             ViewBag.listEmpForRol = emsc.findAllEmpByRol(id);
             return View();
         }
-
-
-
-
-
-
-
-
-
-
 
 
 //////////// ROLE DIO //////////////////////////////////////////////////////
@@ -163,7 +133,6 @@ namespace DiplomskiProject_Client.Controllers
 
 
 
-
         // BRISANJE ROLE
         public ActionResult DeleteRole(string id)
         {
@@ -171,7 +140,6 @@ namespace DiplomskiProject_Client.Controllers
             emsc.deleteRol(emsc.findRol(id));
             return RedirectToAction("IndexRole");
         }
-
 
 
         // UREDI ROLU
@@ -193,7 +161,6 @@ namespace DiplomskiProject_Client.Controllers
         }
 
 
-
         // PODACI SAMO JEDNE ROLE
         [HttpGet]
         public ActionResult ShowRolData(string id)
@@ -203,8 +170,6 @@ namespace DiplomskiProject_Client.Controllers
             emvm.Role = emsc.findRol(id);
             return View("ShowRolData", emvm);
         }
-
-
 
 
 ///////////////////////////////////////// ROLECHANGE ///////////////////////////////////////
@@ -222,10 +187,6 @@ namespace DiplomskiProject_Client.Controllers
         {
             EmployeeManagementServiceClient emsc = new EmployeeManagementServiceClient();
             emsc.roleChange(emvm.Employee);
-            /*
-            AccountAssignmentServiceClient aasc = new AccountAssignmentServiceClient();
-            aasc.addAccToEmployee(aavm.EmpAccMapp);
-            aasc.removeAccFromEmployee(aavm.EmpAccMapp);*/
             return RedirectToAction("IndexEmployee");
         }
     }

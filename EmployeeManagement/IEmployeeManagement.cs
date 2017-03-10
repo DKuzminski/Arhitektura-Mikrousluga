@@ -12,23 +12,20 @@ namespace EmployeeManagement
     [ServiceContract]
     public interface IEmployeeManagement
     {
-
+        // Svi zaposlenici
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findallemp", ResponseFormat = WebMessageFormat.Json)]
         List<Employee> findAllEmp();
 
+        // Sve role
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findallrol", ResponseFormat = WebMessageFormat.Json)]
         List<Role> findAllRol();
 
+        // Svi zaposlenici prema roli
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findallempbyrol/{id}", ResponseFormat = WebMessageFormat.Json)]
         List<Employee> findAllEmpByRol(string id);
-
-
-
-
-
 
 
         // Pronađi pojedinog zaposlenika
@@ -36,28 +33,20 @@ namespace EmployeeManagement
         [WebInvoke(Method = "GET", UriTemplate = "findemp/{id}", ResponseFormat = WebMessageFormat.Json)]
         Employee findEmp(string id);
 
-
-        // Pronađi samo rolu pojedinog zaposlenika ()za rolechange
+        // Pronađi samo rolu pojedinog zaposlenika (za rolechange)
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findroleforemp/{id}", ResponseFormat = WebMessageFormat.Json)]
         List<EmpRole> findRoleForEmp(string id);
-
 
         // Pronađi pojedinog zaposlenika u EmpAccMapp tablici (ZA SVAKI SLUČAJ)
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findempaccmapp/{id}", ResponseFormat = WebMessageFormat.Json)]
         EmpAccMapp findEmpAccMapp(string id);
 
-
-
         // Pronađi pojedinu rolu
         [OperationContract]
         [WebInvoke(Method = "GET", UriTemplate = "findrol/{id}", ResponseFormat = WebMessageFormat.Json)]
         Role findRol(string id);
-
-
-
-
 
         // Kreiraj zaposlenika
         [OperationContract]
@@ -68,10 +57,6 @@ namespace EmployeeManagement
         [OperationContract]
         [WebInvoke(Method = "POST", UriTemplate = "createrol", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         bool createRol(Role role);
-
-
-
-
 
         // Uredi zaposlenika (edit)
         [OperationContract]
@@ -88,9 +73,6 @@ namespace EmployeeManagement
         [WebInvoke(Method = "PUT", UriTemplate = "editrol", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         bool editRol(Role role);
 
-
-
-
         // Obriši zaposlenika 
         [OperationContract]
         [WebInvoke(Method = "DELETE", UriTemplate = "deleteemp", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
@@ -100,11 +82,6 @@ namespace EmployeeManagement
         [OperationContract]
         [WebInvoke(Method = "DELETE", UriTemplate = "deleterol", ResponseFormat = WebMessageFormat.Json, RequestFormat = WebMessageFormat.Json)]
         bool deleteRol(Role role);
-
-
-
-
-
 
         // Pronađi pojedinu rolu za roleChange
         [OperationContract]

@@ -52,7 +52,6 @@ namespace EmployeeManagement
             }
         }
 
-
         // PRONAĐI SVE ZAPOSLENIKE KOJI IMAJU ISTU ROLU
         public List<Employee> findAllEmpByRol(string id)
         {
@@ -71,7 +70,6 @@ namespace EmployeeManagement
             }
         }
 
-
         // PRONAĐI SAMO ROLU ZAPOSLENIKA (ZA ROLECHANGE)
         public List<EmpRole> findRoleForEmp(string id)
         {
@@ -86,9 +84,6 @@ namespace EmployeeManagement
                 return x.ToList();
             }
         }
-
-
-
 
         // PRONAĐI POJEDINOG ZAPOSLENIKA
         public Employee findEmp(string id)
@@ -107,7 +102,6 @@ namespace EmployeeManagement
                 }).First();
             }
         }
-
 
         // PRONAĐI ZAPOSLENIKA U EMPACCMAPP TABLICI (AKO BUDE POTREBNO)
         public EmpAccMapp findEmpAccMapp(string id)
@@ -137,48 +131,11 @@ namespace EmployeeManagement
             }
         }
 
-
-        /*
-         // PRVA VERZIJA, KOJA SAMO KREIRA ZAPOSLENIKA BEZ ROLE U BAZI
         // KREIRAJ ZAPOSLENIKA
         public bool createEmp(Employee employee)
         {
-            using(BazaEmployeeEntities been = new BazaEmployeeEntities())
-            {
-                try
-                {
-                    EmployeeTable et = new EmployeeTable();
-                    et.ImeZap = employee.Ime;
-                    et.PrezimeZap = employee.Prezime;
-                    et.AdresaZap = employee.Adresa;
-                    et.GradZap = employee.Grad;
-                    been.EmployeeTables.Add(et);
-                    been.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }*/
-
-
-        // KREIRAJ ZAPOSLENIKA
-        public bool createEmp(Employee employee)
-        {
-
-            // employeeId = createEmployeeInDB(employee)
-            // poziv na service Account assignment, metodu createEmpAcc(emloyeeId, employee.roleId) - napravi web client...
-            // servis AccMgmt:  prvo pokupi koji accounti potrebni, npr metoda getAccountsForRole(role)
-            //                  zatim za svaki account kreira unos u tablici emplyee-account mapping jedan redak
-            //                  ako je sve ok, vraća OK nazad u servis Employee
-            // servis Employee vraća OK u GUI
-
-            //string BASE_URL = "http://localhost:25006/AccountAssignment.svc/";
             string uriAddAccToEmp = "addacctoemployee";
             string zajednoURI = BASE_URL_ASSIGN + uriAddAccToEmp;
-
             int empID = 0;
             int roleID = 0;
 
@@ -197,14 +154,9 @@ namespace EmployeeManagement
 
                      empID = emt.ZaposlenikID;
                      roleID = emt.RoleID;
-
-
-                     //idEmployee = empID.ToString();
-                     //idRole = roleID.ToString();
                  }
                  catch
                  { 
-
                      return false;
                  }
 
@@ -223,10 +175,7 @@ namespace EmployeeManagement
             webClient.UploadString(zajednoURI, "POST", data);
 
             return true;
-
-
         }
-
 
         // KREIRAJ ROLU
         public bool createRol(Role role)
@@ -291,50 +240,14 @@ namespace EmployeeManagement
             }
         }
 
-
-
-        /*
-         // "PRVA VERZIJA"
         // UREDI SAMO ROLU ZAPOSLENIKA
         public bool editOnlyEmpRol(Employee employee)
         {
-            using (BazaEmployeeEntities ben = new BazaEmployeeEntities())
-            {
-                try
-                {
-                    int cid = Convert.ToInt32(employee.Id);
-                    EmployeeTable et = ben.EmployeeTables.Single(ete => ete.RoleID == cid);
-                    et.RoleID = employee.RoleID;
-                    ben.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }*/
-
-
-        // UREDI SAMO ROLU ZAPOSLENIKA
-        public bool editOnlyEmpRol(Employee employee)
-        {
-            //string BASE_URL = "http://localhost:25006/AccountAssignment.svc/";
-
-            StreamWriter fs = new StreamWriter("C:\\Users\\Dodo\\Downloads\\Diplomski\\roleChange.log");
-            fs.WriteLine("prvi primljeni emp id: " + employee.Id);
-            fs.WriteLine("prvi primljeni role ID: " + employee.RoleID);
-            fs.Flush();
-
             string prviURI = "removeaccfromemployee";
             string prviZaj = BASE_URL_ASSIGN + prviURI;
 
             string drugiURI = "addacctoemployee";
             string drugiZaj = BASE_URL_ASSIGN + drugiURI;
-
-            int staraRola = 99;
-            fs.WriteLine("ispis prije ulaska u bazu: " + staraRola);
-            fs.Flush();
 
             int oldRole = 0;
             int newRoleID = 0;
@@ -345,13 +258,9 @@ namespace EmployeeManagement
                 {
                     int cid = Convert.ToInt32(employee.Id);
                     EmployeeTable et = ben.EmployeeTables.Single(ete => ete.ZaposlenikID == cid);
-
                     oldRole = et.RoleID;
-                    
-
                     et.RoleID = employee.RoleID;
                     ben.SaveChanges();
-
                     newRoleID = et.RoleID;
                     newRolID = newRoleID.ToString();
                 }
@@ -359,61 +268,34 @@ namespace EmployeeManagement
                 {
                     return false;
                 }
-                fs.WriteLine("ispis stare role zapisane u bazi: " + oldRole);
-                fs.Flush();
 
                 // pozivanje removeAccFromEmployee
                 int employeeId = employee.Id; // id zaposlenika koji se prosljeđuje
                 EmpAccMapp empaccmappDel = new EmpAccMapp(employeeId, oldRole);
-                fs.WriteLine("ovo se prosljeđuje metodi removeaccfromemployee:");
-                fs.WriteLine("->empaccmappDel employee ID: " + empaccmappDel.ZapId);
-                fs.WriteLine("->empaccmappDel (old)role ID: " + empaccmappDel.RoleId);
-                fs.Flush();
 
                 DataContractJsonSerializer serDel = new DataContractJsonSerializer(typeof(EmpAccMapp));
                 MemoryStream memDel = new MemoryStream();
                 serDel.WriteObject(memDel, empaccmappDel);
                 string dataDel = Encoding.UTF8.GetString(memDel.ToArray(), 0, (int)memDel.Length);
-                
-                fs.WriteLine("podaci koji se prosljeđuju webclient-u");
-                fs.WriteLine("dataDel: " + dataDel);
-                fs.Flush();
 
                 WebClient webClientDel = new WebClient();
                 webClientDel.Headers["Content-type"] = "application/json";
                 webClientDel.Encoding = Encoding.UTF8;
                 webClientDel.UploadString(prviZaj, "DELETE", dataDel);
 
-                fs.WriteLine("izlazak iz removeaccfromemployee");
-
-
-
-
                 // pozivanje addAccountToEmployee
                 EmpAccMapp empaccmappAdd = new EmpAccMapp(employee.Id, employee.RoleID);
-                fs.WriteLine("podaci koji se prosljeđuju addacctoemployee :");
-                fs.WriteLine("empaccmappAdd employee ID: " + empaccmappAdd.ZapId);
-                fs.WriteLine("empaccmappAdd role ID: " + empaccmappAdd.RoleId);
-                fs.Flush();
 
                 DataContractJsonSerializer serAdd = new DataContractJsonSerializer(typeof(EmpAccMapp));
                 MemoryStream memAdd = new MemoryStream();
                 serAdd.WriteObject(memAdd, empaccmappAdd);
                 string dataAdd = Encoding.UTF8.GetString(memAdd.ToArray(), 0, (int)memAdd.Length);
 
-                fs.WriteLine("podaci koji se prosljeđuju webclient-u");
-                fs.WriteLine("dataAdd: " + dataAdd);
-                fs.Flush();
-
                 WebClient webClientAdd = new WebClient();
                 webClientAdd.Headers["Content-type"] = "application/json";
                 webClientAdd.Encoding = Encoding.UTF8;
                 webClientAdd.UploadString(drugiZaj, "POST", dataAdd);
-
-
-                fs.Close();
                 return true;
-
             }
         }
 
@@ -476,16 +358,6 @@ namespace EmployeeManagement
         {
             try
             {
-                /*
-                var idZap = employee.Id;
-                string zapID = idZap.ToString();
-                var oldRoleID = findRolForRolechange(zapID);
-                string oldRolID = oldRoleID.ToString();
-
-                var employeeID = employee.Id;
-                string empID = employeeID.ToString();
-                */
-
                 editOnlyEmpRol(employee);
                 return true;
             }

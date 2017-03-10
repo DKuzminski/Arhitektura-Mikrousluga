@@ -15,20 +15,18 @@ namespace EmployeeManagement
 
         public EmpAccMapp()
         { }
-        // konstruktor za create employee (prosljeđuješ samo empID)
+
+        // konstruktor za create employee (samo za empID)
         public EmpAccMapp(int zaposlenikId)
         {
             ZapId = zaposlenikId;
         }
 
-        // konstruktor za removeAccFromEmployee (prosljeđuješ empId i oldRoleID)
+        // konstruktor za removeAccFromEmployee (za empId i oldRoleID)
         public EmpAccMapp(int zaposlenikId, int oldRoleID)
         {
             ZapId = zaposlenikId;
             RoleId = oldRoleID;
         }
-
-
-
     }
 }

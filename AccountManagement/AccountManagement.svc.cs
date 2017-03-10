@@ -31,8 +31,7 @@ namespace AccountManagement
             }
         }
 
-       
-
+        // PRONAĐI SVE RAČUNE PREMA ROLI
         public List<ManyToManyFindAccRole> findAllAccByRol(string id)
         {
             using (BazaAccountManEntities ben = new BazaAccountManEntities())
@@ -43,57 +42,8 @@ namespace AccountManagement
                         where a.RoleID == cid
                         select new ManyToManyFindAccRole { AccID = b.AccID, ImeAccounta = b.ImeAcc, TipAccounta = b.TipAcc, RoleID = a.RoleID };
                 return x.ToList();
-
-
-                /*var ispis =  ben.AccRoleMappTables.Where(acm => acm.AccID == cid).Select(ac => new AccRoleMapp
-                {
-                    RoleId = ac.RoleID
-                }).ToList();
-
-                return ispis;*/
-
-
-
-
-
-                /* var ispis = from a in ben.AccountTables
-                             from b in ben.AccRoleMappTables
-                             where a.AccID == cid
-                             select a;
-                 var drugi = from c in ben.RoleTables
-                             from d in ben.AccRoleMappTables
-                             where c.RoleID == cid
-                             select c;
-                 return ispis;*/
-
-
-
-                //var x = from a in ben.AccountTables from b in ben.RoleTables where b.RoleID == cid select b;
-                //return x.ToList();
-
-
-
-                /*
-                var x = from b in ben.AccountTables
-                        join a in ben.AccRoleMappTables on b.AccID equals a.AccID
-
-                       from c in ben.RoleTables// ovo je višak
-                        join d in ben.AccRoleMappTables on c.RoleID equals d.RoleID // ovo je višak 
-                         select new ManyToManyIspis{ ImeAccounta = b.ImeAcc, TipAccounta = b.TipAcc, RoleID = a.RoleID };
-                return x.ToList();*/
-
-
-                //return ben.AccountTables.Where(s => s.AccRoleMappTables.Any(e => e.RoleTable.RoleID == cid));
-
-
-                /*return ben.AccRoleMappTables.Where(at => at.RoleID == cid).Select(ata => new AccRoleMapp
-                {
-                    AccId = ata.AccID
-                }).ToList();*/
             }
-
         }
-
 
         // PRONAĐI SVE ROLE VEZTANE ZA POJEDINI RAČUN
         public List<ManyToManyFindRolAcc> findAllRolByAcc(string id)
@@ -107,9 +57,7 @@ namespace AccountManagement
                         select new ManyToManyFindRolAcc { ImeRole = c.ImeRole, RoleID = c.RoleID };
                 return x.ToList();
             }
-
         }
-
 
         // PRONAĐI SPECIFIČAN RAČUN (PREMA ID-ju)
         public Account findAcc(string id)
@@ -128,7 +76,6 @@ namespace AccountManagement
             }
         }
 
-
         // KREIRAJ NOVI RAČUN
         public bool createAcc(Account account)
         {
@@ -137,7 +84,6 @@ namespace AccountManagement
                 try
                 {
                     AccountTable at = new AccountTable();
-                    
                     at.ImeAcc = account.Ime;
                     at.TipAcc = account.Tip;
                     at.Kreirano = account.Kreirano;
@@ -154,46 +100,7 @@ namespace AccountManagement
         }
 
 
-
-
-
-        /*
-
-    // KREIRAJ NOVI RAČUN (accandaccrolezajedno klasa)
-    public bool createAcc(AccAndAccRoleZajedno accandaccrolezajedno)
-    {
-        using (BazaAccountManEntities ben = new BazaAccountManEntities())
-        {
-            try
-            {
-                AccountTable at = new AccountTable();
-                AccRoleMappTable acmt = new AccRoleMappTable();
-                //int id = Convert.ToInt32(account.Id); // spremanje id-ja za korištenje kod verifikacije(kad kreiraš novi axxount,treba mu dodati role.Role dodaješ tako da ovaj id ubaciš u funkciju za dodavanje rola)
-
-                at.ImeAcc = accandaccrolezajedno.Ime;
-                at.TipAcc = accandaccrolezajedno.Tip;
-                at.Kreirano = accandaccrolezajedno.Kreirano;
-                at.Izmjena = accandaccrolezajedno.Izmjena;
-                acmt.AccID = accandaccrolezajedno.AccId;
-                acmt.RoleID = accandaccrolezajedno.RoleId;
-                ben.AccountTables.Add(at);
-                ben.AccRoleMappTables.Add(acmt);
-                ben.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-    }*/
-
-
-
-
-
-
-        // OBRIŠI JEDNOG ACCOUNT
+        // OBRIŠI JEDAN ACCOUNT
         public bool deleteAcc(Account account)
         {
             using (BazaAccountManEntities ben = new BazaAccountManEntities())
@@ -212,7 +119,6 @@ namespace AccountManagement
                 }
             }
         }
-
 
         // UPDATE ACCOUNT
         public bool updateAccData(Account account)
@@ -236,8 +142,6 @@ namespace AccountManagement
                 }
             }
         }
-
-
 
         // ADD ROLE TO ACC 
         public bool addRoleToAcc(AccRoleMapp accrolemapp)
@@ -269,7 +173,6 @@ namespace AccountManagement
                 return ben.AccRoleMappTables.Where(acm => acm.AccID == cid).Select(acmt => new AccRoleMapp
                 {
                     AccId = acmt.AccID,
-                    //RoleId = acmt.RoleID
                 }).First();
             }
         }
@@ -295,8 +198,6 @@ namespace AccountManagement
             }
         }
 
-
-
         // PRONAĐI SVE RAČUNE VEZANE ZA POJEDINU ROLU
         public List<ManyToManyFindAccRole> findAccsForRole(string id)
         {
@@ -309,10 +210,7 @@ namespace AccountManagement
                         select new ManyToManyFindAccRole { AccID = b.AccID, ImeAccounta = b.ImeAcc, TipAccounta = b.TipAcc, RoleID = a.RoleID };
                 return x.ToList();
             }
-
         }
-
-
 
         // ADD ACCOUNT TO ROLE (CREATE)
         public bool addAccToRole(AccRoleMapp accrolemapp)
@@ -336,28 +234,6 @@ namespace AccountManagement
                 }
             }
         }
-
-        /*
-        // REMOVE ROLE FROM ACC (DELETE)
-        public bool removeAccFromRole(AccRoleMapp accrolemapp)
-        {
-   
-            int idAccounta = Convert.ToInt32(accrolemapp.AccId);
-            using (BazaAccountManEntities ben = new BazaAccountManEntities())
-            {
-                try
-                {
-                    AccRoleMappTable armt = ben.AccRoleMappTables.Single(arm => arm.AccID == idAccounta);
-                    ben.AccRoleMappTables.Remove(armt);
-                    ben.SaveChanges();
-                    return true;
-                }
-                catch
-                {
-                    return false;
-                }
-            }
-        }*/
 
         // REMOVE ROLE FROM ACC (DELETE)
         public bool removeAccFromRole(AccRoleMapp accrolemapp)

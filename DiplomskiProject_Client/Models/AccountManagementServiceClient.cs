@@ -29,9 +29,6 @@ namespace DiplomskiProject_Client.Models
             }
         }
 
-
-
-
         // PRONAĐI SVE RAČUNE PREMA NEKOJ ROLI
         public List<ManyToManyFindAccRole> findAllAccByRol(string id)
         {
@@ -48,9 +45,6 @@ namespace DiplomskiProject_Client.Models
                 return null;
             }
         }
-
-
-
 
 
         // PRONAĐI SVE ROLE VEZTANE ZA POJEDINI RAČUN
@@ -71,9 +65,6 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
         // PRONAĐI SPECIFIČAN RAČUN (PREMA ID-ju)
         public Account findAcc(string id)
         {
@@ -90,9 +81,6 @@ namespace DiplomskiProject_Client.Models
                 return null;
             }
         }
-
-
-
 
 
         // KREIRAJ NOVI RAČUN
@@ -119,8 +107,7 @@ namespace DiplomskiProject_Client.Models
 
 
 
-
-        // DELETE ACCOUNT (AKO BUDE POTREBNO)
+        // DELETE ACCOUNT (AKO)
         public bool deleteAcc(Account account)
         {
             try
@@ -143,8 +130,7 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-        // UPDATE ACCOUNT (edit)
+        // UPDATE ACCOUNT
         public bool updateAccData(Account account)
         {
             try
@@ -165,11 +151,6 @@ namespace DiplomskiProject_Client.Models
                 return false;
             }
         }
-
-
-
-
-
 
 
 
@@ -196,7 +177,7 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-        // PRONAĐI POJEDINI ACCOUNT U ACCROLEMAPP (TREBA ZA removeRoleFromAcc)
+        // PRONAĐI POJEDINI ACCOUNT U ACCROLEMAPP (Za removeRoleFromAcc)
         public AccRoleMapp findAccRoleMapp(string id)
         {
             try
@@ -236,11 +217,7 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
-
-        // PRONAĐI SVE RAČUNE PREMA NEKOJ ROLI (EDIT ACCOUNTS FOR ROLE)
+        // PRONAĐI SVE RAČUNE PREMA NEKOJ ROLI (EDIT ACC FOR ROLE)
         public List<ManyToManyFindAccRole> findAccsForRole(string id)
         {
             try
@@ -256,9 +233,6 @@ namespace DiplomskiProject_Client.Models
                 return null;
             }
         }
-
-
-
 
 
         /*
@@ -284,8 +258,6 @@ namespace DiplomskiProject_Client.Models
             }
         }
 
-
-
         // REMOVE ACCOUNT FROM ROLE
         public bool removeRoleFromAcc(AccRoleMapp accrolemapp)
         {
@@ -307,10 +279,6 @@ namespace DiplomskiProject_Client.Models
                 return false;
             }
         }*/
-
-
-
-
 
         // ADD ACCOUNT TO ROLE
         public bool addAccToRole(AccRoleMapp accrolemapp)

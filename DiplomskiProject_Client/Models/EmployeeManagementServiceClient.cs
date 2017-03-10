@@ -30,6 +30,7 @@ namespace DiplomskiProject_Client.Models
             }
         }
 
+
         // PRONAĐI SVE ROLE
         public List<Role> findAllRol()
         {
@@ -63,10 +64,6 @@ namespace DiplomskiProject_Client.Models
                 return null;
             }
         }
-
-
-
-
 
         // PRONAĐI POJEDINOG ZAPOSLENIKA
         public Employee findEmp(string id)
@@ -104,9 +101,6 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
         // KREIRAJ ZAPOSLENIKA
         public bool createEmp(Employee employee)
         {
@@ -128,6 +122,7 @@ namespace DiplomskiProject_Client.Models
                 return false;
             }
         }
+
 
         // KREIRAJ ROLU
         public bool createRol(Role role)
@@ -152,9 +147,6 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
         // UREDI PODATKE ZAPOSLENIKA (BEZ ROLE)
         public bool editEmp(Employee employee)
         {
@@ -176,6 +168,7 @@ namespace DiplomskiProject_Client.Models
                 return false;
             }
         }
+
 
         // UREDI SAMO ROLU ZAPOSLENIKA
         public bool editOnlyEmpRole(Employee employee)
@@ -223,9 +216,6 @@ namespace DiplomskiProject_Client.Models
         }
 
 
-
-
-
         // OBRIŠI ZAPOSLENIKA
         public bool deleteEmp(Employee employee)
         {
@@ -270,18 +260,6 @@ namespace DiplomskiProject_Client.Models
                 return false;
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
 
         // ROLECHANGE
         public bool roleChange(Employee employee)
